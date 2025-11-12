@@ -1,0 +1,50 @@
+SERVER SIDE :
+
+
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+public class Server {
+    public static void main(String[] args) throws IOException {
+        ServerSocket serverSocket = new ServerSocket(8080);
+        System.out.println("Server started. Waiting for clients...");
+        Socket socket = serverSocket.accept();
+        System.out.println("Client connected!");
+        Scanner sc = new Scanner(System.in);
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+
+        while (true) {
+            String msg = in.readLine();
+            System.out.println("Client: " + msg);
+            System.out.print("You: ");
+            String reply = sc.nextLine();
+            out.println(reply);
+        }
+    }
+}
+
+
+CLIENT SIDE :
+
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+public class Client {
+    public static void main(String[] args) throws IOException {
+        Socket socket = new Socket("localhost", 8080);
+        Scanner sc = new Scanner(System.in);
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+
+        while (true) {
+            System.out.print("You: ");
+            String msg = sc.nextLine();
+            out.println(msg);
+            String reply = in.readLine();
+            System.out.println("Server: " + reply);
+        }
+    }
+}
