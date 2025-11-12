@@ -1,0 +1,40 @@
+import java.util.*;
+
+class Question {
+    String question;
+    String[] options;
+    int answer;
+
+    Question(String question, String[] options, int answer) {
+        this.question = question;
+        this.options = options;
+        this.answer = answer;
+    }
+}
+
+public class QuizApp {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        List<Question> quiz = new ArrayList<>();
+        quiz.add(new Question("Who invented Java?", new String[]{"James Gosling", "Dennis Ritchie", "Bjarne Stroustrup", "Guido van Rossum"}, 1));
+        quiz.add(new Question("Which keyword is used for inheritance?", new String[]{"implement", "extends", "inherits", "super"}, 2));
+        quiz.add(new Question("Which company owns Java now?", new String[]{"Microsoft", "Oracle", "IBM", "Google"}, 2));
+
+        int score = 0;
+        for (int i = 0; i < quiz.size(); i++) {
+            Question q = quiz.get(i);
+            System.out.println("\nQ" + (i + 1) + ". " + q.question);
+            for (int j = 0; j < q.options.length; j++)
+                System.out.println((j + 1) + ". " + q.options[j]);
+            System.out.print("Enter answer (1-4): ");
+            int ans = sc.nextInt();
+            if (ans == q.answer) {
+                System.out.println("✅ Correct!");
+                score++;
+            } else {
+                System.out.println("❌ Wrong! Correct answer: " + q.options[q.answer - 1]);
+            }
+        }
+        System.out.println("\nYour Score: " + score + "/" + quiz.size());
+    }
+}
