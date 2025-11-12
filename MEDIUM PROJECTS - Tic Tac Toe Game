@@ -1,0 +1,53 @@
+import java.util.*;
+
+public class TicTacToe {
+    static char[][] board = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        char player = 'X';
+        int moves = 0;
+
+        while (true) {
+            printBoard();
+            System.out.println("Player " + player + ", enter row and column (0-2): ");
+            int row = sc.nextInt();
+            int col = sc.nextInt();
+
+            if (board[row][col] == ' ') {
+                board[row][col] = player;
+                moves++;
+                if (checkWin(player)) {
+                    printBoard();
+                    System.out.println("🎉 Player " + player + " wins!");
+                    break;
+                }
+                if (moves == 9) {
+                    printBoard();
+                    System.out.println("It's a draw!");
+                    break;
+                }
+                player = (player == 'X') ? 'O' : 'X';
+            } else {
+                System.out.println("Cell already taken, try again!");
+            }
+        }
+    }
+
+    static void printBoard() {
+        System.out.println("---------");
+        for (char[] row : board) {
+            System.out.println("| " + row[0] + " | " + row[1] + " | " + row[2] + " |");
+        }
+        System.out.println("---------");
+    }
+
+    static boolean checkWin(char p) {
+        for (int i = 0; i < 3; i++)
+            if ((board[i][0] == p && board[i][1] == p && board[i][2] == p) ||
+                (board[0][i] == p && board[1][i] == p && board[2][i] == p))
+                return true;
+        return (board[0][0] == p && board[1][1] == p && board[2][2] == p) ||
+               (board[0][2] == p && board[1][1] == p && board[2][0] == p);
+    }
+}
